@@ -8,7 +8,7 @@ const app = express();
 
 connectDB();
 app.use(express.json());
-app.use(express.static("public"));
+// app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 
 const goalRoutes = require("./routes/goalRoutes");

@@ -45,7 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @des    AUTHENTIC USER
+// @des    AUTHENTICATE USER
 // @route  POST /api/users/login
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
