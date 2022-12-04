@@ -10,8 +10,12 @@ connectDB();
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
-const getAllGoals = require("./routes/goalRoutes");
-app.use("/api/goals", getAllGoals);
+
+const goalRoutes = require("./routes/goalRoutes");
+app.use("/api/goals", goalRoutes);
+
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
 
 app.use(errorHandler);
 
