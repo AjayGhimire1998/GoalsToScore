@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { register, reset } from "../features/auth/authSlice";
+import Spinner from "../components/Spinner";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -11,6 +16,24 @@ function Register() {
 
   const { name, email, password, passwordConfirmation } = formData;
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (store) => store.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess || user) {
+      navigate("/dashboard");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -19,7 +42,23 @@ function Register() {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if (password !== passwordConfirmation) {
+      toast.error("Password doesnt match");
+    } else {
+      const userData = {
+        name,
+        email,
+        password
+      };
+
+      dispatch(register(userData));
+    }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <>
       <section className="heading">
@@ -54,7 +93,7 @@ function Register() {
           </div>
           <div className="form-group">
             <input
-              type="text"
+              type="password"
               className="form-control"
               id="password"
               name="password"
@@ -65,7 +104,7 @@ function Register() {
           </div>
           <div className="form-group">
             <input
-              type="text"
+              type="password"
               className="form-control"
               id="passwordConfirmation"
               name="passwordConfirmation"
