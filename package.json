@@ -6,7 +6,7 @@
     "start": "node backend/server.js",
     "devStart": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
-    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
+    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend && npm start"
   },
   "author": "",
   "license": "ISC",
