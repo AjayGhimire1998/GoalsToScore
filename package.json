@@ -6,7 +6,7 @@
     "start": "node backend/server.js",
     "devStart": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix fronend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,10 @@
     "express-ejs-layouts": "^2.5.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.5"
+  },
+  "engines": {
+    "node": "18.12.1",
+    "npm": "8.19.2"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
