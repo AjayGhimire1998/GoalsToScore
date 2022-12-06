@@ -11,24 +11,30 @@ function Header() {
   const onLogout = () => {
     dispatch(logout());
     dispatch(reset());
-    navigate('/')
+    navigate("/");
   };
   return (
     <>
       <header className="header">
-        <div className="logo">
-          <Link to="/">Goals</Link>
-        </div>
-
-        <ul>
-          {user ? (
-            <li>
-              <button className="btn" onClick={onLogout}>
-                <FaSignOutAlt /> Logout
-              </button>
-            </li>
-          ) : (
-            <>
+        {user ? (
+          <>
+            <div className="logo">
+              <Link to="/dashboard">Goals</Link>
+            </div>
+            <ul>
+              <li>
+                <button className="btn" onClick={onLogout}>
+                  <FaSignOutAlt /> Logout
+                </button>
+              </li>
+            </ul>
+          </>
+        ) : (
+          <>
+            <div className="logo">
+              <Link to="/">Goals</Link>
+            </div>
+            <ul>
               <li>
                 <Link to="/login">
                   <FaSignInAlt /> Login
@@ -39,9 +45,9 @@ function Header() {
                   <FaUser /> Register
                 </Link>
               </li>
-            </>
-          )}
-        </ul>
+            </ul>
+          </>
+        )}
       </header>
     </>
   );

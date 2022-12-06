@@ -12,6 +12,10 @@ const getGoals = asyncHandler(async (req, res) => {
 // @des    SET GOAL
 // @route  POST /api/goals
 const setGoal = asyncHandler(async (req, res) => {
+  if (!req.body.title && !req.body.description) {
+    res.status(400);
+    throw new Error("Title and Description cannot be empty");
+  }
   if (!req.body.title) {
     res.status(400);
     throw new Error("Title cannot be empty");
@@ -21,6 +25,7 @@ const setGoal = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Description cannot be empty");
   }
+
   const newGoal = await Goal.create({
     title: req.body.title,
     description: req.body.description,
@@ -38,8 +43,6 @@ const updateGoal = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Goal not found!");
   }
-
-  
 
   //check for user
   if (!req.user) {
@@ -85,7 +88,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
   await goal.remove();
   res
     .status(200)
-    .json({ message: ` GOAL ${goal.title} successfully deleted ` });
+    .json(goal._id);
 });
 
 module.exports = { getGoals, setGoal, updateGoal, deleteGoal };
