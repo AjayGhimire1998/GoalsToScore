@@ -19,7 +19,7 @@ function Header() {
         {user ? (
           <>
             <div className="logo">
-              <Link to="/dashboard">Goals</Link>
+              <Link to="/dashboard">GoalsToScore</Link>
             </div>
             <ul>
               <li>
@@ -32,7 +32,7 @@ function Header() {
         ) : (
           <>
             <div className="logo">
-              <Link to="/">Goals</Link>
+              <Link to="/">GoalsToScore</Link>
             </div>
             <ul>
               <li>

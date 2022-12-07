@@ -108,6 +108,19 @@ h3 {
   background: none;
 }
 
+.parent-intro{
+  width: auto;
+  height: auto;
+  
+  position: absolute;
+  top:50%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  margin: auto;
+}
+
 .form,
 .content {
   width: 70%;
@@ -167,6 +180,13 @@ h3 {
 
 .btn:hover {
   transform: scale(0.98);
+}
+
+.btn-start{
+  width: 100%;
+  margin-bottom: 20px;
+  background: #fff;
+  color: #000;
 }
 
 .loadingSpinnerContainer {
