@@ -58,6 +58,7 @@ function Dashboard() {
           </button>
         </div>
       )}
+      <br/>
       <section className="content">
         {goals.length > 0 ? (
           <div className="goals">

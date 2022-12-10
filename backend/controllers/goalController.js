@@ -1,35 +1,38 @@
 const asyncHandler = require("express-async-handler");
 const Goal = require("../models/goalModel");
-const User = require("../models/userModel");
+// const User = require("../models/userModel");
+// const Task = require('../models/taskModel')
 
 // @des    GET GOALS
 // @route  GET /api/goals
 const getGoals = asyncHandler(async (req, res) => {
   const goals = await Goal.find({ user: req.user.id });
+  // console.log(req.user.id);
+
   res.status(200).json(goals);
 });
 
 // @des    SET GOAL
 // @route  POST /api/goals
 const setGoal = asyncHandler(async (req, res) => {
-  if (!req.body.title && !req.body.description) {
+  if (!req.body.title && !req.body.tasks) {
     res.status(400);
-    throw new Error("Title and Description cannot be empty");
+    throw new Error("Title and Tasks cannot be empty");
   }
   if (!req.body.title) {
     res.status(400);
     throw new Error("Title cannot be empty");
   }
 
-  if (!req.body.description) {
+  if (!req.body.tasks) {
     res.status(400);
-    throw new Error("Description cannot be empty");
+    throw new Error("Tasks cannot be empty");
   }
 
   const newGoal = await Goal.create({
     title: req.body.title,
-    description: req.body.description,
     user: req.user.id,
+    tasks: req.body.tasks
   });
   res.status(200).json(newGoal);
 });
@@ -86,9 +89,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
     throw new Error("User Not Authorized");
   }
   await goal.remove();
-  res
-    .status(200)
-    .json(goal._id);
+  res.status(200).json(goal._id);
 });
 
 module.exports = { getGoals, setGoal, updateGoal, deleteGoal };

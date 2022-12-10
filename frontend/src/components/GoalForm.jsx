@@ -1,37 +1,52 @@
 import { useState } from "react";
-import {  FaWindowClose } from "react-icons/fa";
+import { FaWindowClose } from "react-icons/fa";
+import { IoAddCircle } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { createUserGoal, closeGoalForm } from "../features/goals/goalSlice";
 
 function GoalForm() {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-  });
-  const { title, description } = formData;
+  const [title, setTitle] = useState("");
+  const [task, setTask] = useState("");
+  const tasks = [];
+
+  // const formData = {
+  //   title: "",
+  //   tasks: []
+  // };
+  // const { title, task } = formData;
 
   const dispatch = useDispatch();
 
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+  const onTitleChange = (e) => {
+    setTitle(e.target.value);
   };
+
+  const onTaskChange = (e) => {
+    setTask(e.target.value);
+  };
+
+  const onTaskAdd = (e) => {
+    tasks.push(task);
+    setTask("");
+    return tasks;
+  };
+  console.log(tasks);
+
+  // console.log(formData);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const goalData = {
       title,
-      description,
+      task,
     };
 
     dispatch(createUserGoal(goalData));
 
-    setFormData({
-      title: "",
-      description: "",
-    });
+    // setFormData({
+    //   title: "",
+    //   task: [],
+    // });
   };
 
   return (
@@ -43,28 +58,31 @@ function GoalForm() {
               <h3>
                 Set a Goal
                 <p style={{ float: "right" }}>
-                  <FaWindowClose size={"25px"} onClick={() => dispatch(closeGoalForm())}/>
+                  <FaWindowClose
+                    size={"25px"}
+                    onClick={() => dispatch(closeGoalForm())}
+                  />
                 </p>
               </h3>
             </div>
-
             <input
               type="text"
               id="title"
               name="title"
               value={title}
-              onChange={onChange}
+              onChange={onTitleChange}
               placeholder="Name Your Goal"
-            ></input>
-            <textarea
-              name="description"
-              id="description"
-              cols="30"
-              rows="10"
-              value={description}
-              onChange={onChange}
+            />
+
+            <input
+              name="task"
+              id="task"
+              value={task}
+              onChange={onTaskChange}
               placeholder="Describe Your Goal"
-            ></textarea>
+            />
+            <IoAddCircle className="icon" size={"40px"} onClick={onTaskAdd} />
+            <br />
           </div>
           <div className="form-group">
             <button className="btn btn-block">Submit</button>
