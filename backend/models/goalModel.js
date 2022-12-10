@@ -9,11 +9,11 @@ const goalSchema = mongoose.Schema(
     },
     title: {
       type: String,
-      required: [true, "Please add a title"],
+      required: [true, "Please add a title."],
     },
-    description: {
-      type: String,
-      required: [true, "Please add a description"],
+    sub_tasks: {
+      type: Array,
+      required: [true, "Please set sub tasks."],
     },
   },
   {
