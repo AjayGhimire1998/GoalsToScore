@@ -1,16 +1,19 @@
 import React from "react";
-import { FaEdit } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { IoMdDoneAll } from "react-icons/io";
-import { useDispatch } from "react-redux";
-import { deleteUserGoal } from "../features/goals/goalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUserGoal, openAddTaskForm, setGoalId } from "../features/goals/goalSlice";
+import TaskForm from "./TaskForm";
 
 function GoalItem({ goal }) {
   const dispatch = useDispatch();
+  const { isAddTaskFormOpen, goals, goalId } = useSelector((store) => store.goals);
 
   const dateAndTime = new Date(goal.createdAt).toLocaleString("en-AU");
   const indexOfComma = dateAndTime.indexOf(",");
   const dateCreated = dateAndTime.slice(0, indexOfComma);
   const timeCreated = dateAndTime.slice(indexOfComma + 1);
+
   return (
     <div className="goal">
       <div>
@@ -27,16 +30,21 @@ function GoalItem({ goal }) {
             return (
               <>
                 <div className="task-items">
-                  <li key={task._id}>
-                    {index + 1}: {task.task.toUpperCase()}
+                  <li key={task?._id}>
+                    {index + 1}: {task?.task.toUpperCase()}
                   </li>
-                  <label className="switch">
-                    <input
-                      type="checkbox"
-                      onChange={() => console.log("checked")}
-                    />
-                    <span className="slider round"></span>
-                  </label>
+                  <div>
+                    <small style={{ fontSize: "10px" }}>pending</small>
+                    <label className="switch">
+                      <input
+                        type="checkbox"
+                        // checked={task.active === true ? true : !false}
+                        onChange={() => console.log("Checked")}
+                      />
+                      <span className="slider round"></span>
+                    </label>
+                    <small style={{ fontSize: "10px" }}>done</small>
+                  </div>
                 </div>
                 <hr />
                 <br />
@@ -45,12 +53,18 @@ function GoalItem({ goal }) {
           })}
         </ul>
         <br />
-        <p>{goal.description}</p>
+        {isAddTaskFormOpen && goal._id === goalId ? (
+          <TaskForm goal={goal} />
+        ) : null}
+        <br />
         <div className="edit-delete">
-          <FaEdit
+          <FaPlus
             size={"30px"}
             className="icon"
-            onClick={() => dispatch(deleteUserGoal(goal._id))}
+            onClick={() => {
+              dispatch(setGoalId(goal._id));
+              dispatch(openAddTaskForm());
+            }}
           />
           <IoMdDoneAll
             size={"30px"}

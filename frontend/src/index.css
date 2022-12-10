@@ -93,8 +93,8 @@ h3 {
 }
 
 .goal {
-  background-color: #f4f4f4;
-  margin: 10px 0;
+  background-color: #e0dbdb;
+  margin: 30px 0;
   padding: 20px 0 10px;
   position: relative;
 }
@@ -137,7 +137,7 @@ h3 {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: rgb(98, 96, 96);
   -webkit-transition: .4s;
   transition: .4s;
 }

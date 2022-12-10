@@ -38,6 +38,24 @@ export const createUserGoal = createAsyncThunk(
   }
 );
 
+export const editUserGoal = createAsyncThunk(
+  "goal/create",
+  async (goalData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await goalServices.updateGoal(goalData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const deleteUserGoal = createAsyncThunk(
   "goal/delete",
   async (id, thunkAPI) => {
@@ -59,6 +77,8 @@ export const deleteUserGoal = createAsyncThunk(
 const initialState = {
   goals: [],
   isGoalFormOpen: false,
+  isAddTaskFormOpen: false,
+  goalId: null,
   isError: false,
   // isFormSubmitError: false,
   isSuccess: false,
@@ -75,6 +95,15 @@ export const goalSlice = createSlice({
     },
     closeGoalForm: (state) => {
       state.isGoalFormOpen = false;
+    },
+    openAddTaskForm: (state) => {
+      state.isAddTaskFormOpen = true;
+    },
+    closeAddTaskForm: (state) => {
+      state.isAddTaskFormOpen = false;
+    },
+    setGoalId: (state, action) => {
+      state.goalId = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -120,5 +149,12 @@ export const goalSlice = createSlice({
       });
   },
 });
-export const { reset, openGoalForm, closeGoalForm } = goalSlice.actions;
+export const {
+  reset,
+  openGoalForm,
+  closeGoalForm,
+  openAddTaskForm,
+  closeAddTaskForm,
+  setGoalId
+} = goalSlice.actions;
 export default goalSlice.reducer;
