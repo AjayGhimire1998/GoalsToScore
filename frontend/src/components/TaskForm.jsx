@@ -6,11 +6,11 @@ import { closeAddTaskForm } from "../features/goals/goalSlice";
 function TaskForm() {
   const dispatch = useDispatch();
 
-  const [task, setTask] = useState("");
+  // const [task, setTask] = useState("");
 
-  const onTaskChange = (e) => {
-    setTask(e.target.value)
-  }
+  // const onTaskChange = (e) => {
+  //   setTask(e.target.value)
+  // }
   return (
     <>
       <div className="form-group">
@@ -30,7 +30,7 @@ function TaskForm() {
           id="task"
           name="task"
           // value={task}
-          onChange={onTaskChange}
+          // onChange={onTaskChange}
           placeholder="Add task to your goal."
         />
       </div>
