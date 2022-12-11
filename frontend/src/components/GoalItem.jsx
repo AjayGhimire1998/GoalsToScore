@@ -2,12 +2,16 @@ import React from "react";
 import { FaPlus } from "react-icons/fa";
 import { IoMdDoneAll } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUserGoal, openAddTaskForm, setGoalId } from "../features/goals/goalSlice";
+import {
+  deleteUserGoal,
+  openAddTaskForm,
+  setGoalId,
+} from "../features/goals/goalSlice";
 import TaskForm from "./TaskForm";
 
 function GoalItem({ goal }) {
   const dispatch = useDispatch();
-  const { isAddTaskFormOpen, goals, goalId } = useSelector((store) => store.goals);
+  const { isAddTaskFormOpen, goalId } = useSelector((store) => store.goals);
 
   const dateAndTime = new Date(goal.createdAt).toLocaleString("en-AU");
   const indexOfComma = dateAndTime.indexOf(",");

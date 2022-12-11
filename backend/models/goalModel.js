@@ -12,12 +12,6 @@ const goalSchema = mongoose.Schema(
       required: [true, "Please add a title."],
     },
     tasks: [{ task: String, active: Boolean }],
-
-    // {
-    //   type: Array,
-    //   default: [],
-    //   required: [true, "Please set sub tasks."],
-    // },
   },
   {
     timestamps: true,

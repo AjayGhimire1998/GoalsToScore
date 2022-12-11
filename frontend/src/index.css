@@ -202,6 +202,18 @@ input:checked + .slider:before {
   margin: auto;
 }
 
+.add-task{
+  width: 20%;
+  padding: 5px 0px;
+  background-color: #000;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.add-task:hover{
+  transform: scale(0.98);
+}
 .form,
 .content {
   width: 70%;
@@ -210,6 +222,7 @@ input:checked + .slider:before {
 
 .form-group {
   margin-bottom: 10px;
+  
 }
 
 .form-group input,
@@ -313,5 +326,6 @@ input:checked + .slider:before {
 
   .heading p {
     font-size: 1.5rem;
+    
   }
 }

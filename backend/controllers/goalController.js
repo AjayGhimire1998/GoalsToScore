@@ -32,7 +32,7 @@ const setGoal = asyncHandler(async (req, res) => {
   const newGoal = await Goal.create({
     title: req.body.title,
     user: req.user.id,
-    tasks: req.body.tasks
+    tasks: req.body.tasks,
   });
   res.status(200).json(newGoal);
 });
@@ -59,9 +59,15 @@ const updateGoal = asyncHandler(async (req, res) => {
     throw new Error("User Not Authorized");
   }
 
-  const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  // const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
+  //   new: true,
+  // });
+  const updatedGoal = await Goal.findOneAndUpdate(
+    { _id: (goal._id).toString()},
+    { $push: { tasks: req.body } },
+    {new: true}
+  );
+
   res.status(200).json(updatedGoal);
 });
 

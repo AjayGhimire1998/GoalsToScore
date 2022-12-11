@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5001/api/goals/";
+export const API_URL = "http://localhost:5001/api/goals/";
 
 const getUserGoals = async (token) => {
   const config = {
@@ -23,6 +23,17 @@ const createGoal = async (goalData, token) => {
   return response.data;
 };
 
+const updateGoal = async (goalId, newTask, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(API_URL + goalId, newTask, config );
+  return response.data;
+};
+
 const deleteGoal = async (goalId, token) => {
   const config = {
     headers: {
@@ -34,5 +45,5 @@ const deleteGoal = async (goalId, token) => {
   return response.data;
 };
 
-const goalServices = { createGoal, getUserGoals, deleteGoal };
+const goalServices = { createGoal, getUserGoals, updateGoal, deleteGoal };
 export default goalServices;

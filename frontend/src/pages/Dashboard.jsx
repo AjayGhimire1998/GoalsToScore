@@ -7,7 +7,6 @@ import {
   getUserGoals,
   reset,
   openGoalForm,
-  closeGoalForm,
 } from "../features/goals/goalSlice";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
@@ -32,9 +31,9 @@ function Dashboard() {
       toast.error(message);
     }
 
-    return () => {
-      dispatch(reset());
-    };
+    // return () => {
+    //   dispatch(reset());
+    // };
   }, [user, navigate, isError, message, dispatch]);
 
   if (isLoading) {

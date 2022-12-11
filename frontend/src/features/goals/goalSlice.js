@@ -39,11 +39,12 @@ export const createUserGoal = createAsyncThunk(
 );
 
 export const editUserGoal = createAsyncThunk(
-  "goal/create",
-  async (goalData, thunkAPI) => {
+  "goal/edit",
+  async (goalId, goalData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await goalServices.updateGoal(goalData, token);
+      const res =  await goalServices.updateGoal(goalId, goalData, token);
+      console.log(res);
     } catch (error) {
       const message =
         (error.response &&
@@ -80,7 +81,6 @@ const initialState = {
   isAddTaskFormOpen: false,
   goalId: null,
   isError: false,
-  // isFormSubmitError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
@@ -118,7 +118,6 @@ export const goalSlice = createSlice({
       })
       .addCase(createUserGoal.rejected, (state, action) => {
         state.isLoading = false;
-        // state.isFormSubmitError = true;
         state.message = action.payload;
       })
       .addCase(getUserGoals.pending, (state) => {
@@ -130,6 +129,20 @@ export const goalSlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(getUserGoals.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(editUserGoal.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editUserGoal.fulfilled, (state, action) => {
+        const updatingGoal = state.goals.find(goal => goal._id === state.goalId)
+        updatingGoal.tasks.push(action.payload);
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(editUserGoal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -155,6 +168,6 @@ export const {
   closeGoalForm,
   openAddTaskForm,
   closeAddTaskForm,
-  setGoalId
+  setGoalId,
 } = goalSlice.actions;
 export default goalSlice.reducer;
