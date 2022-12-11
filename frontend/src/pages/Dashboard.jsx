@@ -20,9 +20,9 @@ function Dashboard() {
   );
 
   useEffect(() => {
-    if (isError) {
-      console.log(message);
-    }
+    // if (isError) {
+    //   console.log(message);
+    // }
     if (!user) {
       navigate("/login");
     }
@@ -34,7 +34,7 @@ function Dashboard() {
     // return () => {
     //   dispatch(reset());
     // };
-  }, [user, navigate, isError, message, dispatch]);
+  }, [user, navigate, dispatch]);
 
   if (isLoading) {
     return <Spinner />;

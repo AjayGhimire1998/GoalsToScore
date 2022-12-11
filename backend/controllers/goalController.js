@@ -63,14 +63,29 @@ const updateGoal = asyncHandler(async (req, res) => {
   //   new: true,
   // });
   const updatedGoal = await Goal.findOneAndUpdate(
-    { _id: (goal._id).toString()},
+    { _id: goal._id.toString() },
     { $push: { tasks: req.body } },
-    {new: true}
+    { new: true }
   );
 
   res.status(200).json(updatedGoal);
 });
 
+// @desc UPDATE SUB_GOAL STATUS
+// @route UPDATE /api/goals/:id/task/:taskId
+
+const updateTaskStatus = asyncHandler(async (req, res) => {
+  const updatedTask = await Goal.findOneAndUpdate(
+    { _id: req.params.id, "tasks._id": req.params.taskId },
+    {
+      $set: {
+        "tasks.$.active": req.body.active,
+      },
+    }
+  );
+
+  res.status(200).json(updatedTask);
+});
 // @des    DELETE GOALS
 // @route  DELETE /api/goals/:id
 // @access PRIVATE
@@ -98,4 +113,4 @@ const deleteGoal = asyncHandler(async (req, res) => {
   res.status(200).json(goal._id);
 });
 
-module.exports = { getGoals, setGoal, updateGoal, deleteGoal };
+module.exports = { getGoals, setGoal, updateGoal, updateTaskStatus, deleteGoal };

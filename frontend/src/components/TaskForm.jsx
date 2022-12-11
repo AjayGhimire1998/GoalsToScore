@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { FaWindowClose } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { closeAddTaskForm, editUserGoal } from "../features/goals/goalSlice";
+import { useDispatch } from "react-redux";
+import {
+  closeAddTaskForm,
+  replaceUpdatedGoal,
+} from "../features/goals/goalSlice";
 import { API_URL } from "../features/goals/goalServices";
+import axios from "axios";
 
 function TaskForm({ goal }) {
   const dispatch = useDispatch();
-  // const { goalId } = useSelector((store) => store.goals);
 
   const [addingTask, setAddingTask] = useState("");
 
@@ -14,15 +17,23 @@ function TaskForm({ goal }) {
     setAddingTask(e.target.value);
   };
 
-  const addTask = (e) => {
+  const addTask = async (e) => {
     e.preventDefault();
     const data = {
       task: addingTask,
       active: true,
     };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
 
-    console.log(API_URL + goal._id, data);
-    dispatch(editUserGoal(goal._id, data));
+    const res = await axios.put(API_URL + goal._id, data, config);
+    dispatch(replaceUpdatedGoal(res.data));
+    setAddingTask("");
   };
   return (
     <>

@@ -38,24 +38,23 @@ export const createUserGoal = createAsyncThunk(
   }
 );
 
-export const editUserGoal = createAsyncThunk(
-  "goal/edit",
-  async (goalId, goalData, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      const res =  await goalServices.updateGoal(goalId, goalData, token);
-      console.log(res);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
+// export const editUserGoal = createAsyncThunk(
+//   "goal/edit",
+//   async (goalId, goalData, thunkAPI) => {
+//     try {
+//       const token = thunkAPI.getState().auth.user.token;
+//       const res =  await goalServices.updateGoal(goalId, goalData, token);
+//     } catch (error) {
+//       const message =
+//         (error.response &&
+//           error.response.data &&
+//           error.response.data.message) ||
+//         error.message ||
+//         error.toString();
+//       return thunkAPI.rejectWithValue(message);
+//     }
+//   }
+// );
 
 export const deleteUserGoal = createAsyncThunk(
   "goal/delete",
@@ -105,6 +104,11 @@ export const goalSlice = createSlice({
     setGoalId: (state, action) => {
       state.goalId = action.payload;
     },
+    replaceUpdatedGoal: (state, action) => {
+      state.goals = state.goals.map((goal) =>
+        goal._id !== action.payload._id ? goal : action.payload
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -133,20 +137,20 @@ export const goalSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(editUserGoal.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(editUserGoal.fulfilled, (state, action) => {
-        const updatingGoal = state.goals.find(goal => goal._id === state.goalId)
-        updatingGoal.tasks.push(action.payload);
-        state.isLoading = false;
-        state.isSuccess = true;
-      })
-      .addCase(editUserGoal.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
+      // .addCase(editUserGoal.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(editUserGoal.fulfilled, (state, action) => {
+      //   // const updatingGoal = state.goals.find(goal => goal._id === state.goalId)
+      //   // updatingGoal.tasks.push(action.payload);
+      //   state.isLoading = false;
+      //   state.isSuccess = true;
+      // })
+      // .addCase(editUserGoal.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isError = true;
+      //   // state.message = action.payload;
+      // })
       .addCase(deleteUserGoal.pending, (state) => {
         state.isLoading = true;
       })
@@ -169,5 +173,6 @@ export const {
   openAddTaskForm,
   closeAddTaskForm,
   setGoalId,
+  replaceUpdatedGoal
 } = goalSlice.actions;
 export default goalSlice.reducer;
