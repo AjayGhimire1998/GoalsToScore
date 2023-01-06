@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.b40703be.css",
-    "main.js": "/static/js/main.7dea190d.js",
-    "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
-    "index.html": "/index.html",
-    "main.b40703be.css.map": "/static/css/main.b40703be.css.map",
-    "main.7dea190d.js.map": "/static/js/main.7dea190d.js.map",
-    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
+    "main.css": "/GoalsToScore/static/css/main.b40703be.css",
+    "main.js": "/GoalsToScore/static/js/main.70930483.js",
+    "static/js/787.cda612ba.chunk.js": "/GoalsToScore/static/js/787.cda612ba.chunk.js",
+    "index.html": "/GoalsToScore/index.html",
+    "main.b40703be.css.map": "/GoalsToScore/static/css/main.b40703be.css.map",
+    "main.70930483.js.map": "/GoalsToScore/static/js/main.70930483.js.map",
+    "787.cda612ba.chunk.js.map": "/GoalsToScore/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b40703be.css",
-    "static/js/main.7dea190d.js"
+    "static/js/main.70930483.js"
   ]
 }
