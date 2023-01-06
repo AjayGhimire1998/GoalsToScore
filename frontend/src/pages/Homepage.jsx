@@ -6,7 +6,7 @@ function Homepage() {
   const staticTextNodeOne = `<h2>Finding it difficult to manage your daily goals?</h2>`;
   const staticTextNodeTwo = `<h2>Welcome to the ultimate Goals Management App</h2>`;
   const staticTextNodeThree = `<h1>GoalsToScore</h1>`;
-  const startButton = `<button class="btn btn-start">Get Started</button>`;
+  const startButton = `<button class="add-task">Get Started</button>`;
 
   const navigate = useNavigate();
   // const typeWritter = async (text) => {
